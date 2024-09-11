@@ -7,6 +7,10 @@ WORKDIR /app
 # Copia los archivos del proyecto
 COPY . .
 
+# Inicializa el módulo de Go
+RUN go mod init ggithub.com/TomGGB/gophishlinux || true
+RUN go mod tidy
+
 # Compila la aplicación
 RUN go build -o gophish
 
