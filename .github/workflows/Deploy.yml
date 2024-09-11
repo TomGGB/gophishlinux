@@ -30,7 +30,8 @@ jobs:
 
     - name: Install ngrok
       run: |
-        curl -s https://ngrok.com/download | tar xz
+        curl -sSL https://bin.equinox.io/c/4b5a7db3c0f7/ngrok-stable-linux-amd64.tgz -o ngrok.tgz
+        tar -xzf ngrok.tgz
         sudo mv ngrok /usr/local/bin/ngrok
         chmod +x /usr/local/bin/ngrok
 
