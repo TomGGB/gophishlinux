@@ -5,8 +5,7 @@
 		"cert_path": "gophish_admin.crt",
 		"key_path": "gophish_admin.key",
 		"trusted_origins": [
-			"gophishlinux.railway.internal",
-			"gophishlinux-production.up.railway.app"
+			"https://gophishs-production.up.railway.app"
 		]
 	},
 	"phish_server": {
@@ -22,5 +21,8 @@
 	"logging": {
 		"filename": "",
 		"level": ""
-	}
+	},
+	"trusted_origins": [
+		"https://gophishs-production.up.railway.app"
+	]
 }
