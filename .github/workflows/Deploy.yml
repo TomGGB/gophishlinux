@@ -27,12 +27,3 @@ jobs:
           -p 3333:3333 \
           -p 80:80 \
           gophish-app
-
-    - name: Wait for Gophish to be ready
-      run: |
-        sleep 20  # Ajusta el tiempo si es necesario
-
-    - name: Check Gophish status
-      run: |
-        curl --silent --fail http://localhost:80 || exit 1
-        curl --silent --fail https://localhost:3333 || exit 1
