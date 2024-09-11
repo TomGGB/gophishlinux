@@ -18,7 +18,7 @@ RUN go get -v && go build -v
 
 
 # Runtime container
-FROM debian:stable-slim
+FROM debian:stable-20240904
 
 RUN useradd -m -d /opt/gophish -s /bin/bash app
 
