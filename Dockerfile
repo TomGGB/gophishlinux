@@ -12,7 +12,7 @@ RUN go mod init github.com/TomGGB/gophishlinux || true
 RUN go mod tidy
 
 # Compila la aplicación
-RUN go build -o gophish ./...
+RUN go build -o gophish ./gophish
 
 # Usa una imagen base más pequeña para el contenedor final
 FROM alpine:latest
