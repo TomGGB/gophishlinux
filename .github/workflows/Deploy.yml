@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy Gophish with ngrok
 
 on:
   push:
@@ -27,3 +27,15 @@ jobs:
           -p 3333:3333 \
           -p 80:80 \
           gophish-app
+
+    - name: Install ngrok
+      run: |
+        wget https://bin.equinox.io/c/4b5a7db3c0f7/ngrok-stable-linux-amd64.zip
+        unzip ngrok-stable-linux-amd64.zip
+        chmod +x ngrok
+
+    - name: Start ngrok
+      run: |
+        ./ngrok http 3333 > /dev/null &
+        sleep 10  # Espera a que ngrok esté listo
+        curl --silent --fail http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
