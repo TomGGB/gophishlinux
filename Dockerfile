@@ -10,7 +10,7 @@ RUN gulp
 
 
 # Build Golang binary
-FROM golang:1.15.2 AS build-golang
+FROM golang AS build-golang
 
 WORKDIR /go/src/github.com/gophish/gophish
 COPY . .
@@ -18,7 +18,7 @@ RUN go get -v && go build -v
 
 
 # Runtime container
-FROM debian:stable-20240904
+FROM debian:latest
 
 RUN useradd -m -d /opt/gophish -s /bin/bash app
 
