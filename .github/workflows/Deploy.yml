@@ -1,4 +1,4 @@
-name: Deploy Gophish with ngrok
+name: Deploy Gophish to GitHub Pages
 
 on:
   push:
@@ -28,19 +28,15 @@ jobs:
           -p 80:80 \
           gophish-app
 
-    - name: Install ngrok
-      run: |
-        sudo curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc > /dev/null
-        echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list
-        sudo apt update
-        sudo apt install -y ngrok
+    - name: Wait for Gophish to start
+      run: sleep 30  # Ajusta el tiempo según sea necesario
 
-    - name: Authenticate ngrok
+    - name: Copy static files
       run: |
-        ngrok authtoken 2LOd6TVcLyut7Vd4E04wlCTYl6G_4yQa2x6zYfwWW9np2G83T
+        docker cp gophish:/app/static ./static
 
-    - name: Start ngrok
-      run: |
-        ngrok http 3333 > /dev/null &
-        sleep 10  # Espera a que ngrok esté listo
-        curl --silent --fail http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./static

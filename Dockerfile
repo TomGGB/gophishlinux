@@ -1,33 +1,27 @@
-# Usar una imagen base de Ubuntu
-FROM ubuntu:latest
+# Usa una imagen base de Go
+FROM golang:1.17-alpine AS builder
 
-# Instalar dependencias necesarias
-RUN apt-get update && \
-    apt-get install -y \
-    ca-certificates \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+# Establece el directorio de trabajo
+WORKDIR /app
 
-# Crear un directorio de trabajo
-WORKDIR /gophish
+# Copia los archivos del proyecto
+COPY . .
 
-# Copiar los archivos de Gophish al contenedor
-COPY gophish /gophish/gophish
-COPY config.json /gophish/config.json
-COPY gophish_admin.crt /gophish/gophish_admin.crt
-COPY gophish_admin.key /gophish/gophish_admin.key
-COPY static/ /gophish/static/
-COPY templates/ /gophish/templates/
-COPY db/ /gophish/db/
-COPY gophish.db /gophish/gophish.db
-COPY VERSION /gophish/VERSION
+# Compila la aplicación
+RUN go build -o gophish
 
-# Dar permisos de ejecución al binario de Gophish
-RUN chmod +x /gophish/gophish
+# Usa una imagen base más pequeña para el contenedor final
+FROM alpine:latest
 
-# Exponer los puertos que usa Gophish
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Copia el binario compilado desde la etapa de construcción
+COPY --from=builder /app/gophish .
+
+# Expone los puertos necesarios
+EXPOSE 3333
 EXPOSE 80
-EXPOSE 8080
 
-# Comando para ejecutar Gophish
-CMD ["/gophish/gophish"]
+# Comando para ejecutar la aplicación
+CMD ["./gophish"]
