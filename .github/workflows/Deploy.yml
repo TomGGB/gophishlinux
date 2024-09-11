@@ -37,13 +37,12 @@ jobs:
 
     - name: Authenticate ngrok
       run: |
-        echo 2LOd6TVcLyut7Vd4E04wlCTYl6G_4yQa2x6zYfwWW9np2G83T | ngrok authtoken
+        ngrok authtoken 2LOd6TVcLyut7Vd4E04wlCTYl6G_4yQa2x6zYfwWW9np2G83T
 
     - name: Start ngrok
       run: |
-        ngrok http 3333 > /tmp/ngrok.log &
+        ngrok http 3333 > /dev/null &
         sleep 10  # Espera a que ngrok esté listo
-        cat /tmp/ngrok.log
         curl --silent --fail http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
 
     - name: Check Gophish status
