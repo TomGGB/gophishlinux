@@ -26,7 +26,7 @@ COPY VERSION /gophish/VERSION
 RUN chmod +x /gophish/gophish
 
 # Exponer los puertos que usa Gophish
-EXPOSE 3333
+EXPOSE 80
 EXPOSE 8080
 
 # Comando para ejecutar Gophish
