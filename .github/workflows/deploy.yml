@@ -30,7 +30,7 @@ jobs:
 
     - name: Wait for Gophish to be ready
       run: |
-        sleep 30  # Ajusta el tiempo si es necesario
+        sleep 20  # Ajusta el tiempo si es necesario
 
     - name: Check Gophish status
       run: |
