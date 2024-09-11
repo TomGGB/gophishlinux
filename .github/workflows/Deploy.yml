@@ -30,12 +30,12 @@ jobs:
 
     - name: Install ngrok
       run: |
-        wget https://bin.equinox.io/c/4b5a7db3c0f7/ngrok-stable-linux-amd64.zip
-        unzip ngrok-stable-linux-amd64.zip
-        chmod +x ngrok
+        curl -s https://ngrok.com/download | tar xz
+        sudo mv ngrok /usr/local/bin/ngrok
+        chmod +x /usr/local/bin/ngrok
 
     - name: Start ngrok
       run: |
-        ./ngrok http 3333 > /dev/null &
+        ngrok http 3333 > /dev/null &
         sleep 10  # Espera a que ngrok esté listo
         curl --silent --fail http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
