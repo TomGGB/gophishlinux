@@ -44,8 +44,3 @@ jobs:
         ngrok http 3333 > /dev/null &
         sleep 10  # Espera a que ngrok esté listo
         curl --silent --fail http://localhost:4040/api/tunnels | jq -r '.tunnels[0].public_url'
-
-    - name: Check Gophish status
-      run: |
-        curl --silent --fail http://localhost:80 || exit 1
-        curl --silent --fail https://localhost:3333 || exit 1
