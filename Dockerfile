@@ -4,17 +4,15 @@ FROM ubuntu:latest
 # Instalar dependencias necesarias
 RUN apt-get update && \
     apt-get install -y \
-    wget \
     ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Descargar y extraer Gophish
+# Crear un directorio de trabajo
 WORKDIR /gophish
-COPY ./gophish_linux_amd64 /gophish/gophish
-RUN chmod +x /gophish/gophish
 
-# Copiar archivos de configuración
+# Copiar los archivos de Gophish al contenedor
+COPY gophish /gophish/gophish
 COPY config.json /gophish/config.json
 COPY gophish_admin.crt /gophish/gophish_admin.crt
 COPY gophish_admin.key /gophish/gophish_admin.key
@@ -23,7 +21,10 @@ COPY templates/ /gophish/templates/
 COPY db/ /gophish/db/
 COPY gophish.db /gophish/gophish.db
 
-# Exponer puertos
+# Dar permisos de ejecución al binario de Gophish
+RUN chmod +x /gophish/gophish
+
+# Exponer los puertos que usa Gophish
 EXPOSE 3333
 EXPOSE 8080
 
