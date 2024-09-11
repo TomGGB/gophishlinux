@@ -35,6 +35,10 @@ jobs:
         sudo apt update
         sudo apt install -y ngrok
 
+    - name: Authenticate ngrok
+      run: |
+        ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
+
     - name: Start ngrok
       run: |
         ngrok http 3333 > /dev/null &
