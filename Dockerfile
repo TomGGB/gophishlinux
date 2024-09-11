@@ -20,6 +20,7 @@ COPY static/ /gophish/static/
 COPY templates/ /gophish/templates/
 COPY db/ /gophish/db/
 COPY gophish.db /gophish/gophish.db
+COPY VERSION /gophish/VERSION
 
 # Dar permisos de ejecución al binario de Gophish
 RUN chmod +x /gophish/gophish
