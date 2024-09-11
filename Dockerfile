@@ -1,9 +1,9 @@
-FROM golang:1.17 as builder
+FROM golang as builder
 WORKDIR /app
 COPY . .
 RUN go build -o gophish
 
-FROM ubuntu:20.04
+FROM ubuntu:latest
 WORKDIR /app
 COPY --from=builder /app/gophish /app/gophish
 COPY static /app/static
