@@ -37,7 +37,7 @@ jobs:
 
     - name: Authenticate ngrok
       run: |
-        echo "${{ secrets.NGROK_AUTH_TOKEN }}" | ngrok authtoken
+        echo ${{ secrets.NGROK_AUTH_TOKEN }} | ngrok authtoken
 
     - name: Start ngrok
       run: |
